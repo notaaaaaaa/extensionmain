@@ -1,4 +1,4 @@
-# CodeVault Main
+# Extension Main
 
 This repository contains a small demo application built around a browser extension and a companion test site. It is meant as a sandbox for experimenting with content scripts, background scripts, and simple redirect rules.
 
