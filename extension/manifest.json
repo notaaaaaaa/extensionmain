@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "Web Intrusion Detector",
+  "version": "1.0",
+  "description": "Detects SQLi, redirects, inline scripts, spam requests, and suspicious downloads.",
+  "permissions": [
+    "webRequest",
+    "scripting",
+    "storage",
+    "activeTab",
+    "notifications",
+    "tabs"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["rules.js", "content.js"],
+      "run_at": "document_start"
+    }
+  ]
+}

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Redirect Test Page</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+            text-align: center;
+        }
+        
+        .warning {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+        
+        .redirect-info {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+        }
+        
+        .back-button {
+            background-color: #6c757d;
+        }
+        
+        .back-button:hover {
+            background-color: #545b62;
+        }
+    </style>
+</head>
+<body>
+    <div class="warning">
+        ⚠️ You have been redirected to this test page
+    </div>
+    
+    <h1>Redirect Landing Page</h1>
+    
+    <div class="redirect-info">
+        <h3>Redirect Information:</h3>
+        <p><strong>Timestamp:</strong> <span id="timestamp"></span></p>
+        <p><strong>Referrer:</strong> <span id="referrer"></span></p>
+        <p><strong>URL Parameters:</strong> <span id="urlParams"></span></p>
+    </div>
+    
+    <p>This page simulates a malicious redirect destination for testing purposes.</p>
+    
+    <div>
+        <button onclick="triggerChainedRedirect()">Trigger Chained Redirect</button>
+        <button onclick="triggerPhishingRedirect()">Simulate Phishing Redirect</button>
+        <button class="back-button" onclick="goBack()">Go Back</button>
+    </div>
+    
+    <div style="margin-top: 30px;">
+        <h3>Activity Log:</h3>
+        <div id="redirectLog" style="background-color: #fff; border: 1px solid #ddd; padding: 10px; border-radius: 5px; text-align: left; max-height: 200px; overflow-y: auto;"></div>
+    </div>
+
+    <script>
+        function logRedirectActivity(message) {
+            const log = document.getElementById('redirectLog');
+            const timestamp = new Date().toLocaleTimeString();
+            const entry = document.createElement('div');
+            entry.innerHTML = `<strong>[${timestamp}]</strong> ${message}`;
+            log.appendChild(entry);
+            log.scrollTop = log.scrollHeight;
+        }
+        
+        function displayRedirectInfo() {
+            const now = new Date();
+            document.getElementById('timestamp').textContent = now.toLocaleString();
+            document.getElementById('referrer').textContent = document.referrer || 'Direct access';
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const paramsText = urlParams.toString() || 'None';
+            document.getElementById('urlParams').textContent = paramsText;
+            
+            logRedirectActivity('Redirect page loaded');
+            logRedirectActivity(`Referrer: ${document.referrer || 'None'}`);
+            logRedirectActivity(`URL parameters: ${paramsText}`);
+        }
+        
+        function triggerChainedRedirect() {
+            logRedirectActivity('Initiating chained redirect sequence...');
+            
+            const redirectChain = [
+                'https://example.com/step1?redirect=true',
+                'https://malicious-site.example.org/step2',
+                'https://phishing-site.example.net/final'
+            ];
+            
+            let currentStep = 0;
+            
+            function nextRedirect() {
+                if (currentStep < redirectChain.length) {
+                    const url = redirectChain[currentStep];
+                    logRedirectActivity(`Chained redirect step ${currentStep + 1}: ${url}`);
+                    currentStep++;
+                    
+                    if (currentStep < redirectChain.length) {
+                        setTimeout(nextRedirect, 2000);
+                    }
+                }
+            }
+            
+            nextRedirect();
+        }
+        
+        function triggerPhishingRedirect() {
+            logRedirectActivity('Simulating phishing redirect...');
+            
+            const phishingUrls = [
+                'https://paypa1.com/login',  // Typosquatting
+                'https://g00gle.com/signin',  // Character substitution
+                'https://amazon-security.net/verify',  // Subdomain abuse
+                'https://microsoft-update.org/install'  // Brand impersonation
+            ];
+            
+            phishingUrls.forEach((url, index) => {
+                setTimeout(() => {
+                    logRedirectActivity(`Phishing redirect simulation: ${url}`);
+                }, index * 1000);
+            });
+        }
+        
+        function goBack() {
+            logRedirectActivity('User navigating back...');
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                // Fallback if no history
+                window.location.href = 'index.html';
+            }
+        }
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            displayRedirectInfo();
+            
+            // Simulate some additional suspicious behavior
+            setTimeout(() => {
+                logRedirectActivity('Attempting to modify browser history...');
+                try {
+                    history.pushState({}, '', '/fake-secure-page');
+                    logRedirectActivity('History manipulation successful');
+                } catch (e) {
+                    logRedirectActivity('History manipulation failed');
+                }
+            }, 3000);
+        });
+        
+        // Track page visibility changes (user switching tabs)
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                logRedirectActivity('User switched away from page');
+            } else {
+                logRedirectActivity('User returned to page');
+            }
+        });
+    </script>
+</body>
+</html>

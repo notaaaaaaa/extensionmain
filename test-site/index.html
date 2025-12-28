@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Attack Playground</title>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    
+    h1 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .button-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+    }
+    
+    button {
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      min-width: 200px;
+    }
+    
+    button:hover {
+      background-color: #c82333;
+    }
+    
+    .warning {
+      background-color: #fff3cd;
+      border: 1px solid #ffeaa7;
+      color: #856404;
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    
+    .logs {
+      margin-top: 30px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 15px;
+    }
+    
+    #logOutput {
+      background-color: #f8f9fa;
+      border: 1px solid #e9ecef;
+      padding: 10px;
+      border-radius: 3px;
+      max-height: 200px;
+      overflow-y: auto;
+      font-family: monospace;
+      font-size: 12px;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="warning">
+    ⚠️ WARNING: This is a test site designed to simulate suspicious web behavior for extension testing purposes only.
+  </div>
+  
+  <h1>Test Site for Extension</h1>
+  
+  <div class="button-container">
+    <button onclick="triggerSQLi()">SQLi-like Request</button>
+    <button onclick="triggerRedirect()">Weird Redirect</button>
+    <button onclick="triggerSpamRequests()">Spam Requests</button>
+    <button onclick="triggerMalwareDownload()">Fake Malware Download</button>
+    <button onclick="stealClipboardData()">Steal Clipboard Data</button>
+    <button onclick="startKeylogger()">Start Keylogger</button>
+    <button onclick="stopKeylogger()">Stop Keylogger</button>
+    <button onclick="requestCameraAccess()">Request Camera Access</button>
+    <button onclick="triggerMimeMismatch()">MIME Type Mismatch</button>
+    <button onclick="enableAutoRedirect()">Auto Redirect</button>
+    <button onclick="showFakeSecurityWarning()">Fake Security Warning</button>
+    <button onclick="hijackFullscreen()">Fullscreen UI Hijack</button>
+    <button onclick="hijackFormCredentials()">Form Credential Hijack</button>
+  </div>
+
+  <div class="logs">
+    <h3>Activity Log:</h3>
+    <div id="logOutput"></div>
+    <button onclick="clearLogs()" style="background-color: #6c757d; margin-top: 10px; min-width: 120px;">Clear Logs</button>
+  </div>
+
+  
+
+  <script src="script.js"></script>
+</body>
+</html>
