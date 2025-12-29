@@ -23,8 +23,8 @@ This repository contains a small demo application built around a browser extensi
 If you have not already, clone this repository:
 
 ```bash
-git clone https://github.com/notaaaaaaa/codevaultmain.git
-cd codevaultmain
+git clone https://github.com/notaaaaaaa/extensionmain.git
+cd extension
 ```
 
 If you are working locally already (for example from a ZIP), you can ignore the clone step and just open the folder in VS Code.
@@ -55,7 +55,7 @@ Alternatively, you can serve the folder with a simple HTTP server (for example, 
 
 ## Contributing
 
-This repo is primarily for personal experimentation and interview preparation. Feel free to fork it and adapt it to your own needs.
+This repo is primarily for personal experimentation. Feel free to fork it and adapt it to your own needs.
 
 ## License
 
