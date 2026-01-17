@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Web Intrusion Detector - Report</title>
+    <style>
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        margin: 0;
+        padding: 12px;
+        background: #0b1020;
+        color: #f8f9fa;
+        width: 800px;
+        box-sizing: border-box;
+      }
+      h1 {
+        font-size: 16px;
+        margin: 0 0 8px;
+      }
+      .subtitle {
+        font-size: 11px;
+        opacity: 0.8;
+        margin-bottom: 10px;
+      }
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 10px;
+        align-items: center;
+      }
+      select,
+      button {
+        font-size: 12px;
+        padding: 4px 6px;
+        border-radius: 4px;
+        border: 1px solid #3a3f58;
+        background: #151a2b;
+        color: #f8f9fa;
+      }
+      button {
+        cursor: pointer;
+      }
+      button:hover {
+        background: #1f2640;
+      }
+      .summary-table,
+      .events-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 8px;
+        font-size: 11px;
+      }
+      .summary-table th,
+      .summary-table td,
+      .events-table th,
+      .events-table td {
+        border: 1px solid #2a3045;
+        padding: 4px 6px;
+        text-align: left;
+      }
+      .summary-table th,
+      .events-table th {
+        background: #141a30;
+        position: sticky;
+        top: 0;
+        z-index: 1;
+      }
+      .summary-section-title {
+        font-size: 12px;
+        margin: 6px 0;
+        font-weight: 600;
+      }
+      .events-container {
+        max-height: 280px;
+        overflow: auto;
+        border-radius: 4px;
+        border: 1px solid #2a3045;
+      }
+      .badge {
+        display: inline-block;
+        padding: 1px 4px;
+        border-radius: 3px;
+        font-size: 10px;
+      }
+      .badge-critical {
+        background: #b02a37;
+        color: #fff;
+      }
+      .badge-warning {
+        background: #ffb02e;
+        color: #1b1b1b;
+      }
+      .badge-info {
+        background: #0d6efd;
+        color: #fff;
+      }
+      .muted {
+        opacity: 0.7;
+      }
+      .no-data {
+        font-size: 11px;
+        opacity: 0.8;
+        padding: 8px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Web Intrusion Detector – Report</h1>
+    <div class="subtitle">
+      Live log of detected events, grouped by origin and OWASP-style category.
+    </div>
+
+    <div class="controls">
+      <label>
+        Origin:
+        <select id="originFilter">
+          <option value="all">All origins</option>
+        </select>
+      </label>
+      <label>
+        Category:
+        <select id="categoryFilter">
+          <option value="all">All categories</option>
+          <option value="INJECTION">INJECTION</option>
+          <option value="XSS">XSS</option>
+          <option value="MISCONFIGURATION">MISCONFIGURATION</option>
+          <option value="SENSITIVE_DATA_EXPOSURE">
+            SENSITIVE_DATA_EXPOSURE
+          </option>
+          <option value="CLIENT_SIDE_ATTACKS">CLIENT_SIDE_ATTACKS</option>
+        </select>
+      </label>
+      <label>
+        Show last
+        <select id="limitSelect">
+          <option value="0" selected>All</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+          <option value="200">200</option>
+        </select>
+        events
+      </label>
+      <button id="refreshBtn">Refresh</button>
+      <button id="exportBtn">Export JSON</button>
+    </div>
+
+    <div class="summary-section-title">Per-origin category summary</div>
+    <table class="summary-table" id="summaryTable">
+      <thead>
+        <tr>
+          <th>Origin</th>
+          <th>INJECTION</th>
+          <th>XSS</th>
+          <th>MISCONFIG</th>
+          <th>SDE</th>
+          <th>CLIENT</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <div class="summary-section-title">Recent events</div>
+    <div class="events-container">
+      <table class="events-table" id="eventsTable">
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Origin</th>
+            <th>Category</th>
+            <th>Rule ID</th>
+            <th>Type</th>
+            <th>Severity</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div id="emptyState" class="no-data" style="display: none">
+      No detections recorded yet for the current filters.
+    </div>
+
+    <script src="popup.js"></script>
+  </body>
+</html>

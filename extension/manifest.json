@@ -11,11 +11,13 @@
     "notifications",
     "tabs"
   ],
-  "host_permissions": [
-    "<all_urls>"
-  ],
+  "host_permissions": ["<all_urls>"],
   "background": {
     "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Web Intrusion Detector Report"
   },
   "content_scripts": [
     {
